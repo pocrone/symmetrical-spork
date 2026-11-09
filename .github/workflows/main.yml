@@ -1,0 +1,26 @@
+name: PHP Lint & Check
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  php-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: mbstring, intl, pdo_mysql, zip
+        coverage: none
+
+    - name: Check PHP Syntax (Lint)
+      run: |
+        find . -name "*.php" -not -path "./vendor/*" -exec php -l {} \;
