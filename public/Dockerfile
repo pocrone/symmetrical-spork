@@ -19,6 +19,9 @@ WORKDIR /var/www/html
 # Copy project files
 COPY . /var/www/html
 
+# Fix permissions for CodeIgniter writable directories so Apache can write cache/logs
+RUN chown -R www-data:www-data /var/www/html/writable /var/www/html/public
+
 # Install PHP dependencies via Composer (this generates the missing vendor folder)
 RUN composer install --no-dev --optimize-autoloader
 
